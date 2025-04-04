@@ -16,6 +16,10 @@ class Reservation
     #[ORM\Column]
     private ?float $prix_billet = null;
 
+    #[ORM\ManyToOne(inversedBy: 'refVols')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?vol $refVol = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class Reservation
     public function setPrixBillet(float $prix_billet): static
     {
         $this->prix_billet = $prix_billet;
+
+        return $this;
+    }
+
+    public function getRefVol(): ?vol
+    {
+        return $this->refVol;
+    }
+
+    public function setRefVol(?vol $refVol): static
+    {
+        $this->refVol = $refVol;
 
         return $this;
     }

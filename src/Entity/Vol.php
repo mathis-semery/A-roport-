@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VolRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,17 @@ class Vol
 
     #[ORM\ManyToOne(inversedBy: 'refVols')]
     private ?Avion $refAvion = null;
+
+    /**
+     * @var Collection<int, Reservation>
+     */
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'refVol', orphanRemoval: true)]
+    private Collection $refVols;
+
+    public function __construct()
+    {
+        $this->refVols = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +118,36 @@ class Vol
     public function setRefAvion(?Avion $refAvion): static
     {
         $this->refAvion = $refAvion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getRefVols(): Collection
+    {
+        return $this->refVols;
+    }
+
+    public function addRefVol(Reservation $refVol): static
+    {
+        if (!$this->refVols->contains($refVol)) {
+            $this->refVols->add($refVol);
+            $refVol->setRefVol($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRefVol(Reservation $refVol): static
+    {
+        if ($this->refVols->removeElement($refVol)) {
+            // set the owning side to null (unless already changed)
+            if ($refVol->getRefVol() === $this) {
+                $refVol->setRefVol(null);
+            }
+        }
 
         return $this;
     }
