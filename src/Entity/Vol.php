@@ -29,6 +29,9 @@ class Vol
     #[ORM\Column]
     private ?float $prixBillet = null;
 
+    #[ORM\ManyToOne(inversedBy: 'refVols')]
+    private ?Avion $refAvion = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Vol
     public function setPrixBillet(float $prixBillet): static
     {
         $this->prixBillet = $prixBillet;
+
+        return $this;
+    }
+
+    public function getRefAvion(): ?Avion
+    {
+        return $this->refAvion;
+    }
+
+    public function setRefAvion(?Avion $refAvion): static
+    {
+        $this->refAvion = $refAvion;
 
         return $this;
     }
