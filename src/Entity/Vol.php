@@ -29,15 +29,21 @@ class Vol
     #[ORM\Column]
     private ?float $prixBillet = null;
 
-    // Relation avec l'entité Avion
     #[ORM\ManyToOne(targetEntity: Avion::class, inversedBy: 'vols')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Avion $refAvion = null;
 
-    // Relation avec l'entité Utilisateur (pilote)
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $refPilote = null;
+
+    // 🆕 Photo associée à la ville d'arrivée
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoVille = null;
+
+    // 🆕 Propriété pour stocker l'URL de l'image de la ville
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cityImageUrl = null;
 
     public function getId(): ?int
     {
@@ -52,7 +58,6 @@ class Vol
     public function setVilleDepart(string $villeDepart): static
     {
         $this->villeDepart = $villeDepart;
-
         return $this;
     }
 
@@ -64,7 +69,6 @@ class Vol
     public function setVilleArrive(string $villeArrive): static
     {
         $this->villeArrive = $villeArrive;
-
         return $this;
     }
 
@@ -76,7 +80,6 @@ class Vol
     public function setDateDepart(\DateTimeInterface $dateDepart): static
     {
         $this->dateDepart = $dateDepart;
-
         return $this;
     }
 
@@ -88,7 +91,6 @@ class Vol
     public function setHeureDepart(\DateTimeInterface $heureDepart): static
     {
         $this->heureDepart = $heureDepart;
-
         return $this;
     }
 
@@ -100,7 +102,6 @@ class Vol
     public function setPrixBillet(float $prixBillet): static
     {
         $this->prixBillet = $prixBillet;
-
         return $this;
     }
 
@@ -112,7 +113,6 @@ class Vol
     public function setRefAvion(?Avion $refAvion): static
     {
         $this->refAvion = $refAvion;
-
         return $this;
     }
 
@@ -124,6 +124,30 @@ class Vol
     public function setRefPilote(?Utilisateur $refPilote): static
     {
         $this->refPilote = $refPilote;
+        return $this;
+    }
+
+    // 🆕 Getter et Setter pour la photo associée à la ville d'arrivée
+    public function getPhotoVille(): ?string
+    {
+        return $this->photoVille;
+    }
+
+    public function setPhotoVille(?string $photoVille): static
+    {
+        $this->photoVille = $photoVille;
+        return $this;
+    }
+
+    // 🆕 Getter et Setter pour l'URL de l'image de la ville
+    public function getCityImageUrl(): ?string
+    {
+        return $this->cityImageUrl;
+    }
+
+    public function setCityImageUrl(?string $cityImageUrl): static
+    {
+        $this->cityImageUrl = $cityImageUrl;
         return $this;
     }
 }
