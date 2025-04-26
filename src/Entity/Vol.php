@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\VolRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,19 +29,15 @@ class Vol
     #[ORM\Column]
     private ?float $prixBillet = null;
 
-    #[ORM\ManyToOne(inversedBy: 'refVols')]
+    // Relation avec l'entité Avion
+    #[ORM\ManyToOne(targetEntity: Avion::class, inversedBy: 'vols')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Avion $refAvion = null;
 
-    /**
-     * @var Collection<int, Reservation>
-     */
-    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'refVol', orphanRemoval: true)]
-    private Collection $refVols;
-
-    public function __construct()
-    {
-        $this->refVols = new ArrayCollection();
-    }
+    // Relation avec l'entité Utilisateur (pilote)
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $refPilote = null;
 
     public function getId(): ?int
     {
@@ -122,33 +116,14 @@ class Vol
         return $this;
     }
 
-    /**
-     * @return Collection<int, Reservation>
-     */
-    public function getRefVols(): Collection
+    public function getRefPilote(): ?Utilisateur
     {
-        return $this->refVols;
+        return $this->refPilote;
     }
 
-    public function addRefVol(Reservation $refVol): static
+    public function setRefPilote(?Utilisateur $refPilote): static
     {
-        if (!$this->refVols->contains($refVol)) {
-            $this->refVols->add($refVol);
-            $refVol->setRefVol($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRefVol(Reservation $refVol): static
-    {
-        if ($this->refVols->removeElement($refVol)) {
-            // set the owning side to null (unless already changed)
-            if ($refVol->getRefVol() === $this) {
-                $refVol->setRefVol(null);
-            }
-        }
-
+        $this->refPilote = $refPilote;
         return $this;
     }
 }

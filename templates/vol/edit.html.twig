@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le vol{% endblock %}
+
+{% block body %}
+    <h1>Modifier le vol</h1>
+
+    {{ include('vol/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a class="btn btn-secondary" href="{{ path('app_vol_index') }}">Retour à la liste</a>
+
+    {{ include('vol/_delete_form.html.twig') }}
+{% endblock %}

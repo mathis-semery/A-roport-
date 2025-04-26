@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Congés{% endblock %}
+
+{% block body %}
+    <h1>Liste des Congés</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Validation</th>
+            <th>Employé/Client</th>
+            <th>Validé par</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for conge in conges %}
+            <tr>
+                <td>{{ conge.id }}</td>
+                <td>{{ conge.dateDebut ? conge.dateDebut|date('d/m/Y') : '' }}</td>
+                <td>{{ conge.dateFin ? conge.dateFin|date('d/m/Y') : '' }}</td>
+                <td>
+                    {% if conge.estValide is same as(true) %}
+                        ✅ Accepté
+                    {% elseif conge.estValide is same as(false) %}
+                        ❌ Refusé
+                    {% else %}
+                        ⏳ En attente
+                    {% endif %}
+                </td>
+                <td>{{ conge.utilisateur ? conge.utilisateur.email : 'Non défini' }}</td>
+                <td>{{ conge.validateur ? conge.validateur.email : 'Non validé' }}</td>
+                <td>
+                    <a href="{{ path('app_conges_show', {'id': conge.id}) }}" class="btn btn-primary btn-sm">Voir</a>
+                    <a href="{{ path('app_conges_edit', {'id': conge.id}) }}" class="btn btn-warning btn-sm">Éditer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" class="text-center">Aucun congé trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_conges_new') }}" class="btn btn-success">Créer un nouveau congé</a>
+{% endblock %}

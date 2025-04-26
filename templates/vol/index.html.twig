@@ -1,20 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VolController!{% endblock %}
+{% block title %}Vol index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Vol index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ville départ</th>
+            <th>Ville arrivée</th>
+            <th>Date départ</th>
+            <th>Heure départ</th>
+            <th>Prix billet</th>
+            <th>Pilote</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for vol in vols %}
+            <tr>
+                <td>{{ vol.id }}</td>
+                <td>{{ vol.villeDepart }}</td>
+                <td>{{ vol.villeArrive }}</td>
+                <td>{{ vol.dateDepart ? vol.dateDepart|date('Y-m-d') : '' }}</td>
+                <td>{{ vol.heureDepart ? vol.heureDepart|date('H:i') : '' }}</td>
+                <td>{{ vol.prixBillet }} €</td>
+                <td>{{ vol.refPilote.nom }}</td>
+                <td>
+                    <a href="{{ path('app_vol_show', {'id': vol.id}) }}">Show</a>
+                    <a href="{{ path('app_vol_edit', {'id': vol.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun vol trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/symfony/test_symfony/src/Controller/VolController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/symfony/test_symfony/templates/vol/index.html.twig</code></li>
-    </ul>
-</div>
+    <a class="btn btn-primary" href="{{ path('app_vol_new') }}">Créer un nouveau vol</a>
 {% endblock %}

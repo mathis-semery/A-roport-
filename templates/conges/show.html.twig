@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conge{% endblock %}
+
+{% block body %}
+    <h1>Conge</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ conges.id }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_conges_index') }}">back to list</a>
+
+    <a href="{{ path('app_conges_edit', {'id': conges.id}) }}">edit</a>
+
+    {{ include('conges/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Utilisateur</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ utilisateur.id }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ utilisateur.email }}</td>
+        </tr>
+        <tr>
+            <th>Roles</th>
+            <td>{{ utilisateur.roles ? utilisateur.roles|json_encode : '' }}</td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td>{{ utilisateur.password }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ utilisateur.nom }}</td>
+        </tr>
+        <tr>
+            <th>Prenom</th>
+            <td>{{ utilisateur.prenom }}</td>
+        </tr>
+        <tr>
+            <th>Date_Naissance</th>
+            <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Ville</th>
+            <td>{{ utilisateur.ville }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_profil_edit') }}" class="btn btn-warning">Modifier mes infos</a>
+    <a href="{{ path('app_logout') }}" class="btn btn-warning">Déconnection</a>
+
+{% endblock %}
