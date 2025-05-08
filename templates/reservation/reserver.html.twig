@@ -1,0 +1,63 @@
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg">
+                <!-- En-tête simplifié -->
+                <div class="card-header bg-primary text-white py-3">
+                    <h2 class="h4 mb-0 text-center">
+                        <i class="fas fa-plane-departure me-2"></i> Vol pour {{ vol.villeArrive }}
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Bannière d'information simplifiée -->
+                    <div class="alert alert-light border mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt text-primary me-3 fs-4"></i>
+                            <div>
+                                <strong>Départ :</strong> {{ vol.villeDepart }}<br>
+                                <strong>Arrivée :</strong> {{ vol.villeArrive }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_start(form, {attr: {class: 'needs-validation', novalidate: ''}}) }}
+
+                    <!-- Champ de prix amélioré -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Montant de la réservation</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-euro-sign"></i>
+                            </span>
+                            {{ form_widget(form.prix_billet, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'aria-label': 'Prix du billet'
+                                }
+                            }) }}
+                        </div>
+                        <small class="text-muted">Prix final TTC</small>
+                    </div>
+
+                    <!-- Bouton de confirmation -->
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary py-2 fw-bold">
+                            <i class="fas fa-check me-2"></i> Valider la réservation
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                    <!-- Assurance optionnelle -->
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="assurance">
+                        <label class="form-check-label small" for="assurance">
+                            Ajouter une assurance annulation (+29€)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

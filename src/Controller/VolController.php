@@ -154,5 +154,10 @@ class VolController extends AbstractController
             return $this->getDefaultImage();
         }
     }
+    private function getDefaultImage(): string
+    {
+        return 'https://via.placeholder.com/500x300.png?text=No+Image';
+    }
+
 
 }

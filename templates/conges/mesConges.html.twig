@@ -18,7 +18,16 @@
             <tr>
                 <td>{{ conge.dateDebut|date('Y-m-d') }}</td>
                 <td>{{ conge.dateFin|date('Y-m-d') }}</td>
-                <td>{{ conge.estValide ? 'Validé' : 'Non validé' }}</td>
+                <td>
+                    {% if conge.estValide is same as(true) %}
+                        Validé
+                    {% elseif conge.estValide is same as(false) %}
+                        Non validé
+                    {% else %}
+                        En attente
+                    {% endif %}
+                </td>
+
             </tr>
         {% else %}
             <tr>

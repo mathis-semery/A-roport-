@@ -65,7 +65,7 @@ class Conges
         return $this->estValide;
     }
 
-    public function setEstValide(bool $estValide): static
+    public function setEstValide(?bool $estValide): self
     {
         $this->estValide = $estValide;
         return $this;

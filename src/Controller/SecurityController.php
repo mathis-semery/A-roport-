@@ -38,12 +38,12 @@ class SecurityController extends AbstractController
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
-        // Créer un nouvel objet Utilisateur
+
         $utilisateur = new Utilisateur();
 
-        // Si le formulaire a été soumis
+
         if ($request->isMethod('POST')) {
-            // Récupérer les données du formulaire
+            // Récupéree les données du formulaire
             $nom = $request->request->get('nom');
             $prenom = $request->request->get('prenom');
             $email = $request->request->get('email');
@@ -51,7 +51,7 @@ class SecurityController extends AbstractController
             $dateNaissance = $request->request->get('date_naissance');
             $ville = $request->request->get('ville');
 
-            // Assigner les données à l'objet utilisateur
+
             $utilisateur->setNom($nom);
             $utilisateur->setPrenom($prenom);
             $utilisateur->setEmail($email);
@@ -62,11 +62,10 @@ class SecurityController extends AbstractController
             $hashedPassword = $passwordHasher->hashPassword($utilisateur, $plainPassword);
             $utilisateur->setPassword($hashedPassword);
 
-            // Enregistrer l'utilisateur dans la base de données
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            // Rediriger vers la page de connexion après inscription
+
             $this->addFlash('success', 'Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.');
             return $this->redirectToRoute('app_login');
         }
@@ -109,12 +108,11 @@ class SecurityController extends AbstractController
         return $this->render('security/edit.html.twig');
     }
 
-    // Dans SecurityController.php
 
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
     public function adminDashboard(): Response
     {
-        return $this->render('security/admin.html.twig');  // Assure-toi que ce fichier existe dans le dossier "security"
+        return $this->render('security/admin.html.twig');
     }
 
 }

@@ -44,6 +44,11 @@
 
                         <a href="{{ path('app_vol_show', {'id': vol.id}) }}" class="book-button">
                             Voir les détails
+                            <a href="{{ path('app_reservation_vol', { volId: vol.id, userId: app.user.id }) }}"
+                               class="btn btn-primary">
+                                Réserver ce vol
+                            </a>
+
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="arrow-icon">
                                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
                             </svg>
