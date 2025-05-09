@@ -25,15 +25,15 @@ class UtilisateurType extends AbstractType
             ->add('ville')
             ->add('ref_modele', EntityType::class, [
                 'class' => Modele::class,
-                'choice_label' => 'id',
+                'choice_label' => 'modele',
+                'required' => False,
+
             ])
             ->add('metier', ChoiceType::class, [
                 'choices'  => [
-                    'Client' => 'Client',
+
                     'Pilote' => 'Pilote',
-                    'Hôtesse' => 'Hôtesse',
-                    'Mécanicien' => 'Mécanicien',
-                    'Contrôleur aérien' => 'Contrôleur aérien',
+                    'Admin' => 'Admin',
                 ],
                 'required' => true,
                 'label' => 'Métier',

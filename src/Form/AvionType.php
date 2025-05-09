@@ -17,7 +17,7 @@ class AvionType extends AbstractType
             ->add('nom')
             ->add('refModele', EntityType::class, [
                 'class' => Modele::class,
-                'choice_label' => 'id',
+                'choice_label' => 'modele',
             ])
         ;
     }
