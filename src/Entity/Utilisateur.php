@@ -101,7 +101,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // Nettoyage des données sensibles
+
     }
 
     public function getNom(): ?string
@@ -164,7 +164,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // ===== Partie métier =====
+
 
     public function getMetier(): ?string
     {
@@ -173,7 +173,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setMetier(string $metier): static
     {
-        $this->metier = $metier ?: 'Client'; // Si jamais vide => reste 'Client'
+        $this->metier = $metier ?: 'Client';
         return $this;
     }
 }

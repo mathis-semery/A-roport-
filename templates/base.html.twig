@@ -35,14 +35,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_login') }}">Login</a>
                     </li>
+
+
+
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_profil', { id: app.user.id }) }}">Profil</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_reservation_mes_reservations') }}">Réservation</a>
+                    </li
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_utilisateur_index', { id: app.user.id }) }}">Utilisateur</a>
-                            <a class="nav-link" href="{{ path('admin_dashboard') }}">Tableau de bord admin</a>
+                        <a class="nav-link" href="{{ path('admin_dashboard') }}">Tableau de bord admin</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_EMPLOYE') %}
@@ -62,8 +67,9 @@
 </nav>
 
 <!-- Contenu principal -->
-<main class="container mt-5">
-    {% block body %}{% endblock %}
+<main class="">
+    {% block body %}
+    {% endblock %}
 </main>
 
 <!-- Footer -->

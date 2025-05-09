@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\modele;
+use App\Entity\Modele;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +24,7 @@ class UtilisateurType extends AbstractType
             ])
             ->add('ville')
             ->add('ref_modele', EntityType::class, [
-                'class' => modele::class,
+                'class' => Modele::class,
                 'choice_label' => 'id',
             ])
             ->add('metier', ChoiceType::class, [

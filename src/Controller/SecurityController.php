@@ -19,9 +19,9 @@ class SecurityController extends AbstractController
              return $this->redirectToRoute('app_profil');
          }
 
-        // get the login error if there is one
+
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
@@ -43,7 +43,7 @@ class SecurityController extends AbstractController
 
 
         if ($request->isMethod('POST')) {
-            // Récupéree les données du formulaire
+
             $nom = $request->request->get('nom');
             $prenom = $request->request->get('prenom');
             $email = $request->request->get('email');

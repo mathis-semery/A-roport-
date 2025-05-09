@@ -37,11 +37,11 @@ class Vol
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $refPilote = null;
 
-    // 🆕 Photo associée à la ville d'arrivée
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoVille = null;
 
-    // 🆕 Propriété pour stocker l'URL de l'image de la ville
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cityImageUrl = null;
 
@@ -127,7 +127,7 @@ class Vol
         return $this;
     }
 
-    // 🆕 Getter et Setter pour la photo associée à la ville d'arrivée
+
     public function getPhotoVille(): ?string
     {
         return $this->photoVille;
@@ -139,7 +139,7 @@ class Vol
         return $this;
     }
 
-    // 🆕 Getter et Setter pour l'URL de l'image de la ville
+
     public function getCityImageUrl(): ?string
     {
         return $this->cityImageUrl;
@@ -149,5 +149,11 @@ class Vol
     {
         $this->cityImageUrl = $cityImageUrl;
         return $this;
+    }
+
+
+    public function __toString(): string
+    {
+        return $this->dateDepart->format('Y-m-d H:i:s');
     }
 }

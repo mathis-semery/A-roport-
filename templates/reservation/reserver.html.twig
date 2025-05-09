@@ -1,63 +1,270 @@
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-lg">
-                <!-- En-tête simplifié -->
-                <div class="card-header bg-primary text-white py-3">
-                    <h2 class="h4 mb-0 text-center">
-                        <i class="fas fa-plane-departure me-2"></i> Vol pour {{ vol.villeArrive }}
-                    </h2>
-                </div>
+{% extends 'base.html.twig' %}
 
-                <div class="card-body p-4">
-                    <!-- Bannière d'information simplifiée -->
-                    <div class="alert alert-light border mb-4">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-map-marker-alt text-primary me-3 fs-4"></i>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        .bg-gradient-flight {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .flight-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            border: none;
+            overflow: hidden;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .flight-header-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .price-input {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .summary-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .btn-booking {
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-booking:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .flight-path {
+            position: relative;
+            height: 2px;
+            background: #e9ecef;
+            margin: 2rem 0;
+        }
+
+        .flight-path:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3a7bd5;
+        }
+
+        .flight-path:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00d2ff;
+        }
+
+        .plane-icon {
+            position: absolute;
+            left: 0;
+            top: -12px;
+            color: #ff6b6b;
+            animation: planeMove 2s ease-in-out infinite;
+        }
+
+        @keyframes planeMove {
+            0% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(calc(100% - 30px)) rotate(5deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container my-5 animate__animated animate__fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card flight-card shadow-lg">
+                    <!-- En-tête avec animation -->
+                    <div class="card-header bg-gradient-flight text-white py-4">
+                        <div class="d-flex align-items-center justify-content-center text-center">
+                            <i class="fas fa-plane flight-header-icon me-3"></i>
                             <div>
-                                <strong>Départ :</strong> {{ vol.villeDepart }}<br>
-                                <strong>Arrivée :</strong> {{ vol.villeArrive }}
+                                <h1 class="h2 mb-1 fw-bold">Réservation de vol</h1>
+                                <p class="mb-0 opacity-75">Confirmation finale</p>
                             </div>
                         </div>
                     </div>
 
-                    {{ form_start(form, {attr: {class: 'needs-validation', novalidate: ''}}) }}
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Visualisation du trajet -->
+                        <div class="text-center mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <h4 class="mb-1 fw-bold">{{ vol.villeDepart }}</h4>
+                                    <small class="text-muted">{{ vol.dateDepart|date('d M Y, H:i') }}</small>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1 fw-bold">{{ vol.villeArrive }}</h4>
 
-                    <!-- Champ de prix amélioré -->
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">Montant de la réservation</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light">
-                                <i class="fas fa-euro-sign"></i>
-                            </span>
-                            {{ form_widget(form.prix_billet, {
-                                'attr': {
-                                    'class': 'form-control',
-                                    'aria-label': 'Prix du billet'
-                                }
-                            }) }}
+                                </div>
+                            </div>
+
+                            <div class="flight-path mx-auto">
+                                <i class="fas fa-plane plane-icon"></i>
+                            </div>
+
+                            <div class="badge bg-light text-dark rounded-pill px-3 py-2">
+                                <i class="fas fa-clock me-1"></i> Les durrée des vols ne sont pas définie
+                            </div>
                         </div>
-                        <small class="text-muted">Prix final TTC</small>
+
+                        <div class="row">
+                            <!-- Formulaire -->
+                            <div class="col-md-6 animate__animated animate__fadeInLeft">
+                                {{ form_start(form, {attr: {class: 'needs-validation', novalidate: ''}}) }}
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold mb-3">Montant du billet</label>
+                                    <div class="input-group input-group-lg mb-3">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-euro-sign text-primary"></i>
+                                    </span>
+                                        {{ form_widget(form.prix_billet, {
+                                            'attr': {
+                                                'class': 'form-control price-input',
+                                                'aria-label': 'Prix du billet'
+                                            }
+                                        }) }}
+                                    </div>
+                                    <div class="alert alert-light d-flex align-items-center">
+                                        <i class="fas fa-info-circle text-primary me-2"></i>
+                                        <small class="text-muted">Prix final TTC - Modification possible jusqu'à 24h avant le vol</small>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg py-3 btn-booking">
+                                        <i class="fas fa-check-circle me-2"></i> Confirmer et payer
+                                    </button>
+                                </div>
+
+                                {{ form_end(form) }}
+                            </div>
+
+                            <!-- Récapitulatif -->
+                            <div class="col-md-6 animate__animated animate__fadeInRight">
+                                <div class="card border-0 shadow-sm h-100">
+                                    <div class="card-header bg-light">
+                                        <h3 class="h5 mb-0 fw-bold"><i class="fas fa-receipt me-2"></i> Récapitulatif</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table summary-table">
+                                            <tr>
+                                                <td><strong>Vol</strong></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Départ</strong></td>
+                                                <td class="text-end">{{ vol.villeDepart }} ({{ vol.dateDepart|date('H:i') }})</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Arrivée</strong></td>
+                                                 <td class="text-end">{{ vol.villeArrive }})</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Durée</strong></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Classe</strong></td>
+                                                <td class="text-end">Économique</td>
+                                            </tr>
+                                            <tr class="border-top">
+                                                <td><strong>Total</strong></td>
+                                                <td class="text-end fw-bold h5 text-primary">{{ form.prix_billet.vars.value }} €</td>
+                                            </tr>
+                                        </table>
+
+                                        <div class="alert alert-success mt-3 animate__animated animate__pulse animate__infinite">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-bolt me-2"></i>
+                                                <small>Dernière place disponible à ce tarif</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Bouton de confirmation -->
-                    <div class="d-grid mt-4">
-                        <button type="submit" class="btn btn-primary py-2 fw-bold">
-                            <i class="fas fa-check me-2"></i> Valider la réservation
-                        </button>
-                    </div>
-
-                    {{ form_end(form) }}
-
-                    <!-- Assurance optionnelle -->
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="assurance">
-                        <label class="form-check-label small" for="assurance">
-                            Ajouter une assurance annulation (+29€)
-                        </label>
+                    <!-- Pied de page -->
+                    <div class="card-footer bg-light">
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-shield-alt text-success me-2"></i>
+                                    <small>Paiement 100% sécurisé</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-exchange-alt text-success me-2"></i>
+                                    <small>Modification gratuite</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-headset text-success me-2"></i>
+                                    <small>Assistance 24h/24</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        document.querySelector('#{{ form.prix_billet.vars.id }}').addEventListener('focus', function() {
+            this.classList.add('animate__animated', 'animate__pulse');
+        });
+
+        document.querySelector('#{{ form.prix_billet.vars.id }}').addEventListener('blur', function() {
+            this.classList.remove('animate__animated', 'animate__pulse');
+        });
+
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Traitement...';
+            btn.disabled = true;
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <h1 class="mb-4">Mes Réservations</h1>
+
+        {% if reservations is empty %}
+            <div class="alert alert-info">Vous n'avez encore fait aucune réservation.</div>
+        {% else %}
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Ville départ</th>
+                    <th>Ville arrivée</th>
+                    <th>Date départ</th>
+                    <th>Heure départ</th>
+                    <th>Prix billet</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reservation in reservations %}
+                    {% set vol = reservation.refVol %}
+                    <tr>
+
+                        <td>{{ vol.villeDepart }}</td>
+                        <td>{{ vol.villeArrive }}</td>
+
+                        <td>{{ vol.dateDepart|date('d/m/Y') }}</td>
+                        <td>{{ vol.heureDepart|date('H:i') }}</td>
+                        <td>{{ vol.prixBillet }} €</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

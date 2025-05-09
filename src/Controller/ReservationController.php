@@ -24,6 +24,22 @@ final class ReservationController extends AbstractController
             'reservations' => $reservationRepository->findAll(),
         ]);
     }
+    #[Route('/mes-reservations', name: 'app_reservation_mes_reservations')]
+    public function mesReservations(ReservationRepository $reservationRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour voir vos réservations.');
+        }
+
+        $reservations = $reservationRepository->findBy(['refUtilisateur' => $user]);
+
+        return $this->render('reservation/mes_reservation.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -104,7 +120,7 @@ final class ReservationController extends AbstractController
             $em->persist($reservation);
             $em->flush();
 
-            return $this->redirectToRoute('app_vol_index');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('reservation/reserver.html.twig', [
@@ -112,6 +128,8 @@ final class ReservationController extends AbstractController
             'vol' => $vol
         ]);
     }
+
+
 
 
 

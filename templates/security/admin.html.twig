@@ -1,57 +1,42 @@
-{# templates/admin/dashboard.html.twig #}
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard Admin{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Tableau de Bord Administrateur</h1>
+    <div class="container py-5">
+        <h1 class="mb-4">Bienvenue sur le tableau de bord Admin</h1>
 
-        <div class="row">
-            <!-- Bouton pour gérer les congés -->
+        <div class="row g-4">
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestion des Congés</h5>
-                        <p class="card-text">Voir et valider les demandes de congés des employés.</p>
-
-                    </div>
-                </div>
+                <a href="{{ path('app_utilisateur_index') }}" class="btn btn-primary w-100 py-3 shadow rounded-3">
+                    🧑‍💼 Gérer les utilisateurs
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('app_avion_index') }}" class="btn btn-success w-100 py-3 shadow rounded-3">
+                    ✈️ Gérer les avions
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('app_conges_index') }}" class="btn btn-warning w-100 py-3 shadow rounded-3">
+                    📅 Gérer les congés
+                </a>
             </div>
 
-            <!-- Bouton pour gérer les utilisateurs -->
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestion des Utilisateurs</h5>
-                        <p class="card-text">Voir et gérer les utilisateurs de l'application.</p>
-
-                    </div>
-                </div>
+                <a href="{{ path('app_modele') }}" class="btn btn-info w-100 py-3 shadow rounded-3">
+                    🛩️ Gérer les modèles (ajouter un modèle d'avion)
+                </a>
             </div>
-
-            <!-- Bouton pour les statistiques -->
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Statistiques</h5>
-                        <p class="card-text">Voir les statistiques de l'application (congés, utilisateurs, etc.).</p>
-
-                    </div>
-                </div>
+                <a href="{{ path('app_reservation_index') }}" class="btn btn-dark w-100 py-3 shadow rounded-3">
+                    📖 Gérer les réservations
+                </a>
             </div>
-        </div>
-
-        <div class="mt-4">
-            <h3>Actions supplémentaires</h3>
-            <div class="row">
-                <div class="col-md-6">
-
-                </div>
-                <div class="col-md-6">
-
-                </div>
+            <div class="col-md-4">
+                <a href="{{ path('app_vol_index') }}" class="btn btn-outline-danger w-100 py-3 shadow rounded-3">
+                    📍 Gérer les vols
+                </a>
             </div>
         </div>
     </div>

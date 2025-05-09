@@ -27,15 +27,15 @@ class VolType extends AbstractType
             ->add('prixBillet')
             ->add('refAvion', EntityType::class, [
                 'class' => Avion::class,
-                'choice_label' => 'nom', // Affiche le nom de l'avion
-                'placeholder' => 'Sélectionnez un avion', // Option de placeholder
+                'choice_label' => 'nom',
+                'placeholder' => 'Sélectionnez un avion',
                 'required' => true,
             ])
             ->add('refPilote', EntityType::class, [
                 'class' => Utilisateur::class,
-                'choices' => $options['pilotes'], // Utilise l'option 'pilotes' passé par le contrôleur
-                'choice_label' => 'nom', // Affiche le nom de l'utilisateur
-                'placeholder' => 'Choisissez un pilote', // Option de placeholder
+                'choices' => $options['pilotes'],
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisissez un pilote',
                 'required' => true,
             ])
         ;
@@ -45,7 +45,7 @@ class VolType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vol::class,
-            'pilotes' => [],  // Ajout de l'option 'pilotes' pour passer les utilisateurs filtrés
+            'pilotes' => [],
         ]);
     }
 }
